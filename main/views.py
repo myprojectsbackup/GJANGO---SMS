@@ -21,7 +21,7 @@ def doLogin(request):
 		user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
 		if user != None:
 			login(request, user)
-			return HttpResponse("Email: "+request.POST.get("email") + "Password: "+request.POST.get("password"))
+			return HttpResponseRedirect('/admin_home')
 
 		else:
 			messages.error(request, 'INVALID LOGIN DETAILS')

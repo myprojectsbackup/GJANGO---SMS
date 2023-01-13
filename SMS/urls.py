@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main import views
+from main import views, HODViews
 
 from django.conf.urls.static import static
 from . import settings
@@ -27,4 +27,7 @@ urlpatterns = [
     path('doLogin', views.doLogin),
     path('get_user_details', views.GetUserDetails),
     path('logout_user', views.logout_user),
+    path('admin_home', HODViews.admin_home),
+    path('add_staff', HODViews.add_staff),
+    path('add_staff_save', HODViews.add_staff_save),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
