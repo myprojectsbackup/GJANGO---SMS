@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from main.models import CustomUser, Staffs, Courses, Students
 from django.contrib import messages
+import datetime
 
 
 def admin_home(request):
@@ -56,7 +57,8 @@ def add_student(request):
 
 def add_student_save(request):
 	if request.method != 'POST':
-		return HttpResponse('Not Allowed')
+		return HttpResponse('Method Not Allowed')
+
 	else:
 		first_name=request.POST.get('first_name')
 		last_name=request.POST.get('last_name')
@@ -64,29 +66,29 @@ def add_student_save(request):
 		email=request.POST.get('email')
 		password=request.POST.get('password')
 		address=request.POST.get('address')
-		session_start=request.POST.get('session_start')
-		session_end=request.POST.get('session_end')
-		course_id=request.POST.get('course')
-		sex=request.POST.get('sex')
+		session_start = request.POST.get('session_start')
+		session_end = request.POST.get('session_end')
+		course_id = request.POST.get('course')
+		sex = request.POST.get('gender')
 
 		try:
-			user=CustomUser.objects.create_user(username=username, password=password, last_name=last_name, first_name=first_name, email=email, user_type=3)
-			user.students.address=address
-			course_obj=Courses.objects.get(id=course_id)
-			user.students.course_id=course_obj
+			user = CustomUser.objects.create_user(username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)
+			user.students.address = address
+			course_obj = Courses.objects.get(id=course_id)
+			user.students.course_id = course_obj
 
-			#convert date to YYYY-MM-DD format
-			start_date=datetime.datetime.strptime('session_start', '%d-%m-%y').strpftime('session_start', '%Y-%m-%d')
-			end_date=datetime.datetime.strptime('session_end', '%d-%m-%y').strpftime('session_end', '%Y-%m-%d')
+			#start_date=datetime.datetime.strptime(session_start, '%d-%m-%y').strftime('%Y-%m-%d')
+			#end_date=datetime.datetime.strptime(session_end, '%d-%m-%y').strftime('%Y-%m-%d')
 
-			user.students.session_start_year=start_date
-			user.students.session_end_year=end_date
-			user.students.gender=sex
-			user.students.profile_pic=""
+
+			user.students.session_start_year = session_start
+			user.students.session_end_year = session_end
+			user.students.gender = sex
+			user.students.profile_pic = ''
 			user.save()
-			messages.success(request, 'Student Added Successful')
-			return HttpResponseRedirect('/add_student')
-		except:
-			messages.error(request, 'Failed to Add Student, Retry Again!')
+			messages.success(request, 'Successfully Added Student')
 			return HttpResponseRedirect('/add_student')
 
+		except:
+			messages.error(request, 'Failed to Add Student, Retry Again')
+			return HttpResponseRedirect('/add_student')

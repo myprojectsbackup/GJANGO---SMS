@@ -50,7 +50,7 @@ class Students(models.Model):
 	gender = models.CharField(max_length=255)
 	profile_pic = models.FileField()
 	address = models.TextField()
-	course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING)
+	course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING, default=1)
 	session_start_year = models.DateField()
 	session_end_year = models.DateField()
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -143,9 +143,9 @@ def create_user_profile(sender, instance, created,  **kwags):
 		if instance.user_type==1:
 			AdminHOD.objects.create(admin = instance)
 		if instance.user_type==2:
-			Staffs.objects.create(admin=instance)
+			Staffs.objects.create(admin=instance, address="")
 		if instance.user_type==3:
-			Students.objects.create(admin=instance, course_id=Courses.objects.get(id=1), session_start_year='2020-01-01', session_end_year='2022-12-31', address="",profile_pic="", gender="")
+			Students.objects.create(admin=instance, course_id=Courses.objects.get(id=1), session_start_year="2020-01-01", session_end_year="2024-01-01",address="", profile_pic="", gender="")
 
 @receiver (post_save, sender=CustomUser)
 def save_user_profile(sender, instance, **kwags):
