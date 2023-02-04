@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from main.models import CustomUser, Staffs, Courses, Students
+from main.models import CustomUser, Staffs, Courses, Students, Subjects
 from django.contrib import messages
 import datetime
 
@@ -69,26 +69,46 @@ def add_student_save(request):
 		session_start = request.POST.get('session_start')
 		session_end = request.POST.get('session_end')
 		course_id = request.POST.get('course')
-		sex = request.POST.get('gender')
+		sex = request.POST.get('sex')
+
 
 		try:
-			user = CustomUser.objects.create_user(username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)
-			user.students.address = address
+			user=CustomUser.objects.create_user(username=username, password=password, last_name=last_name, first_name=first_name, email=email, user_type=3)
+			user.students.address=address
 			course_obj = Courses.objects.get(id=course_id)
 			user.students.course_id = course_obj
-
-			#start_date=datetime.datetime.strptime(session_start, '%d-%m-%y').strftime('%Y-%m-%d')
-			#end_date=datetime.datetime.strptime(session_end, '%d-%m-%y').strftime('%Y-%m-%d')
-
-
 			user.students.session_start_year = session_start
 			user.students.session_end_year = session_end
 			user.students.gender = sex
-			user.students.profile_pic = ''
+			user.students.prof_pic = ""
 			user.save()
-			messages.success(request, 'Successfully Added Student')
+			messages.success(request, 'Student Added Successful')
 			return HttpResponseRedirect('/add_student')
-
 		except:
-			messages.error(request, 'Failed to Add Student, Retry Again')
-			return HttpResponseRedirect('/add_student')
+			messages.error(request, 'Failed to Add Student, Retry Again!')
+		return HttpResponseRedirect('/add_student')
+
+def add_subject(request):
+	courses=Courses.objects.all()    #for courses to show on the add subject page
+	staffs=CustomUser.objects.filter(user_type=2) #for staff members to show in the add subject page
+	return render(request, 'hod_templates/add_subject_template.html', {"staffs": staffs, "courses":courses})
+
+def add_subject_save(request):
+	if request.method != 'POST':
+		return HttpResponse('Method Not Allowed')
+
+	else:
+		subject_name=request.POST.get("subject_name")
+		course_id=request.POST.get("course")
+		course=Courses.objects.get(id=course_id)
+		staff_id=request.POST.get("staff")
+		staff=CustomUser.objects.get(id=staff_id)
+
+		try:
+			subject=Subjects(subject_name=subject_name, course_id=course, staff_id=staff)
+			subject.save()
+			messages.success(request, 'Subject Successfully Added')
+			return HttpResponseRedirect('/add_subject')
+		except:
+			messages.error(request, 'Failed to Add Subject, Retry')
+			return HttpResponseRedirect('/add_subject')

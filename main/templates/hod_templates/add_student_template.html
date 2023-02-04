@@ -46,8 +46,8 @@ Add Student
                   </div>
                   <div class="form-group">
                     <label>Course</label>
-                    <select class="form-control" name="couses">
-                      {% for course in courses %} 
+                    <select class="form-control" name="course">
+                      {% for course in courses %}
                         <option value="{{ course.id }}">{{ course.course_name }}</option>
                       {% endfor %}
                     </select>
