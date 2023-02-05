@@ -22,20 +22,20 @@ Add Subject
                 <div class="card-body">
                   <div class="form-group">
                     <label>Subject Name</label>
-                    <input type="text" class="form-control" name="course" placeholder="Enter Course Name">
+                    <input type="text" class="form-control" name="subject_name" placeholder="Enter Subject">
                   </div>
                   <div class="form-group">
                     <label>Course</label>
-                    <select class="form-control" name="couses">
-                      {% for course in courses %} 
+                    <select class="form-control" name="course">
+                      {% for course in courses %}
                         <option value="{{ course.id }}">{{ course.course_name }}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="form-group">
                     <label>Staff</label>
-                    <select class="form-control" name="couses">
-                      {% for staff in staffs %} 
+                    <select class="form-control" name="staff">
+                      {% for staff in staffs %}
                         <option value="{{ staff.id }}">{{ staff.first_name }} {{ staff.last_name }}</option>
                       {% endfor %}
                     </select>
@@ -56,7 +56,7 @@ Add Subject
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-block">Add New Subject</button>
+                  <button type="submit" class="btn btn-primary btn-block">Add Subject</button>
                 </div>
               </form>
             </div>
