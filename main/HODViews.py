@@ -112,3 +112,19 @@ def add_subject_save(request):
 		except:
 			messages.error(request, 'Failed to Add Subject, Retry')
 			return HttpResponseRedirect('/add_subject')
+
+def manage_staff(request):
+	staffs=Staffs.objects.all()
+	return render(request, 'hod_templates/manage_staff_template.html', {"staffs": staffs})
+
+def manage_student(request):
+	students=Students.objects.all()
+	return render(request, 'hod_templates/manage_student_template.html', {"students": students})
+
+def manage_course(request):
+	courses = Courses.objects.all()
+	return render(request, 'hod_templates/manage_course_template.html', {"courses": courses})
+
+def manage_subject(request):
+	subjects=Subjects.objects.all()
+	return render(request, 'hod_templates/manage_subject_template.html', {"subjects": subjects})
