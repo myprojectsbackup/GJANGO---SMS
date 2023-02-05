@@ -51,7 +51,7 @@ Manage Staff
                       <td>{{ staff.admin.email }}</td>
                       <td>{{ staff.admin.date_joined }}</td>
                       <td>{{ staff.admin.last_login }}</td>
-                      <td><a href="/edit_staff{{ staff.admin.id }}" class="btn btn-success">Edit</a> </td>
+                      <td><a href="/edit_staff/{{ staff.admin.id }}" class="btn btn-success">Edit</a> </td>
                     </tr>
                   {% endfor %}
                   </tbody>
