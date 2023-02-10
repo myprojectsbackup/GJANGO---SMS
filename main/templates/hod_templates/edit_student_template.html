@@ -17,7 +17,7 @@ Edit Student | Username : {{ student.admin.username }} | ID# : {{ student.admin.
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="/edit_student_save" method="POST">
+              <form role="form" action="/edit_student_save" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
@@ -63,6 +63,11 @@ Edit Student | Username : {{ student.admin.username }} | ID# : {{ student.admin.
                   <div class="form-group">
                     <label>Session End</label>
                     <input type="date" class="form-control" name="session_end" placeholder="Session End Year" value="{{ student.session_end_year| date:'Y-m-d' }}">
+                  </div>
+                  <!--FILE INPUT FOR PROFILE PIC -->
+                  <div class="form-group">
+                    <label>Profile Pic</label>
+                    <input type="file" class="form-control" name="profile_pic" placeholder="">
                   </div>
                   <div class="form-group">
                     {% if messages %}
