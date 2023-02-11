@@ -6,12 +6,13 @@ class DateInput(forms.DateInput):
 
 
 class AddStudentForm(forms.Form):
-	email = forms.EmailField(label='Email', max_length=50, widget=forms.EmailInput())
-	password = forms.CharField(label='Password', max_length=50, widget=forms.PasswordInput())
-	first_name = forms.CharField(label='First Name', max_length=50)
-	last_name = forms.CharField(label='Last Name', max_length=50)
-	username = forms.CharField(label='Username', max_length=50)
-	address = forms.CharField(label='Address', max_length=50)
+	first_name = forms.CharField(label='First Name', max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+	last_name = forms.CharField(label='Last Name', max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+	username = forms.CharField(label='Username', max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+	email = forms.EmailField(label='Email', max_length=50, widget=forms.EmailInput(attrs={"class":"form-control"}))
+	password = forms.CharField(label='Password', max_length=50, widget=forms.PasswordInput(attrs={"class":"form-control"}))
+	address = forms.CharField(label='Address', max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+
 	courses = Courses.objects.all()
 	course_list = []
 	for course in courses:
@@ -22,8 +23,9 @@ class AddStudentForm(forms.Form):
 		('Male', 'Male'),
 		('Female', 'Female'),
 	)
-	course = forms.ChoiceField(label='Course', choices=course_list)
-	sex = forms.ChoiceField(label='Sex', choices=gender_choice)
-	session_start = forms.DateField(label='Session Start', widget = DateInput())
-	session_end = forms.DateField(label='Session End', widget = DateInput())
-	profile_pic = forms.FileField(label='Profile Pic', max_length=50)
+
+	course = forms.ChoiceField(label='Course', choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
+	sex = forms.ChoiceField(label='Sex', choices=gender_choice, widget=forms.Select(attrs={"class":"form-control"}))
+	session_start = forms.DateField(label='Session Start Year', widget=DateInput(attrs={"class":"form-control"}))
+	session_end = forms.DateField(label='Session End Year', widget=DateInput(attrs={"class":"form-control"}))
+	profile_pic = forms.FileField(label='Profile Pic', max_length=50, widget=forms.FileInput(attrs={"class":"form-control"}))
